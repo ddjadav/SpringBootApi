@@ -1,6 +1,7 @@
 package com.ddjadav.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,8 +20,11 @@ public class StudentController {
         public List<Student> getStudents(){
             return studentService.getStudents();
         }
-        @PostMapping(path = "create")
-        public void registerNewStudent(@RequestBody Student student){
-           studentService.addNewStudent(student);
+        @PostMapping(
+                path = "create",
+                consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+        )
+        public Student registerNewStudent(@RequestBody Student student){
+           return studentService.addNewStudent(student);
         }
 }
